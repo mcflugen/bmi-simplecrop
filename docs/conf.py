@@ -11,9 +11,11 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os
+import pathlib
 
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
+docs_dir = os.path.dirname(__file__)
 
 import bmi_simplecrop
 
@@ -71,6 +73,8 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.autosummary",
     "sphinx_inline_tabs",
+    "sphinxcontrib.towncrier",
+
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -80,6 +84,14 @@ templates_path = ["_templates"]
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+
+
+# -- Options for towncrier_draft extension --------------------------------------------
+
+towncrier_draft_autoversion_mode = "draft"  # or: 'sphinx-release', 'sphinx-version'
+towncrier_draft_include_empty = True
+towncrier_draft_working_directory = pathlib.Path(docs_dir).parent
+# Not yet supported: towncrier_draft_config_path = 'pyproject.toml'  # relative to cwd
 
 
 # -- Options for HTML output -------------------------------------------------

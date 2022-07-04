@@ -64,6 +64,7 @@ doc = [
   "sphinx",
   "pygments>=2.4",
   "sphinx-inline-tabs",
+  "sphinxcontrib.towncrier",
   "furo",
 ]
 notebook = [
