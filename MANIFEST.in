@@ -1,8 +1,0 @@
-include CHANGES.rst
-
-exclude .pre-commit-config.yaml
-exclude news/*
-exclude noxfile.py
-
-recursive-exclude docs *
-recursive-exclude tests *
