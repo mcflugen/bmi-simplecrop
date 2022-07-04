@@ -108,9 +108,3 @@ def clean(session):
             p.rmdir()
         else:
             p.unlink()
-
-    shutil.rmtree("docs/_build", ignore_errors=True)
-    for p in (ROOT / "docs" / "api").glob("*rst"):
-        if p.name != "index.rst":
-            p.unlink()
-
