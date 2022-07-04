@@ -13,11 +13,11 @@
 import os
 import pathlib
 
+import bmi_simplecrop
+
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 docs_dir = os.path.dirname(__file__)
-
-import bmi_simplecrop
 
 
 if os.environ.get("READTHEDOCS", ""):
@@ -74,7 +74,6 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx_inline_tabs",
     "sphinxcontrib.towncrier",
-
 ]
 
 # Add any paths that contain templates here, relative to this directory.
