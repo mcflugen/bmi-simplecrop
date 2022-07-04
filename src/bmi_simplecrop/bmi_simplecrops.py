@@ -3,7 +3,6 @@ from typing import Tuple
 
 from bmipy import Bmi
 import numpy
-import scipy.interpolate
 
 from .simplecrop import SimpleCrops
 
@@ -323,7 +322,7 @@ class BmiSimpleCrops(Bmi):
         int
             Size of the grid.
         """
-        return np.prod(self._grid[grid].shape)
+        return numpy.prod(self._grid[grid].shape)
 
     def get_grid_spacing(self, grid: int, spacing: numpy.ndarray) -> numpy.ndarray:
         """Get distance between nodes of the computational grid.
@@ -736,7 +735,7 @@ class BmiSimpleCrops(Bmi):
         xy_spacing = [100, 100]
         xy_of_origin = [0, 0]
         """
-        config = toml.load(config_file)
+        # config = toml.load(config_file)
 
         self._simplecrop = SimpleCrops(config_file)
         self._simplecrop.run()

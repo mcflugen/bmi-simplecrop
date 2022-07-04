@@ -1,4 +1,3 @@
-import contextlib
 import os
 import pathlib
 import shutil
@@ -9,7 +8,7 @@ import dask.dataframe as dd
 import numpy as np
 import pandas as pd
 
-from bmipy import Bmi
+# from bmipy import Bmi
 from model_metadata.scripting import as_cwd
 
 
