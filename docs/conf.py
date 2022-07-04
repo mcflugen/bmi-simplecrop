@@ -11,24 +11,29 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import pathlib
 
 import bmi_simplecrop
+
+# import sys
+# sys.path.insert(0, os.path.abspath('.'))
+docs_dir = os.path.dirname(__file__)
 
 
 if os.environ.get("READTHEDOCS", ""):
     # RTD doesn't use the repo's Makefile to build docs.
     import subprocess
 
-    subprocess.run(["sphinx-apidoc", "--force", "-o", "./api", "../src/bmi-simplecrop", "*tests"])
+    subprocess.run(
+        ["sphinx-apidoc", "--force", "-o", "./api", "../src/bmi-simplecrop", "*tests"]
+    )
 
 
 # -- Project information -----------------------------------------------------
 
-project = 'bmi-simplecrop'
-copyright = '2022, Eric Hutton'
-author = 'Eric Hutton'
+project = "bmi-simplecrop"
+copyright = "2022, Eric Hutton"
+author = "Eric Hutton"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -68,15 +73,24 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.autosummary",
     "sphinx_inline_tabs",
+    "sphinxcontrib.towncrier",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+
+
+# -- Options for towncrier_draft extension --------------------------------------------
+
+towncrier_draft_autoversion_mode = "draft"  # or: 'sphinx-release', 'sphinx-version'
+towncrier_draft_include_empty = True
+towncrier_draft_working_directory = pathlib.Path(docs_dir).parent
+# Not yet supported: towncrier_draft_config_path = 'pyproject.toml'  # relative to cwd
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -102,7 +116,7 @@ html_theme_options = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]
 
 napoleon_numpy_docstring = True
 napoleon_google_docstring = False

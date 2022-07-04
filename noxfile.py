@@ -22,7 +22,7 @@ def lint(session: nox.Session) -> None:
     session.install("pre-commit")
     session.run("pre-commit", "run", "--all-files")
 
-    towncrier(session)
+    # towncrier(session)
 
 
 @nox.session
@@ -40,7 +40,9 @@ def docs(session: nox.Session) -> None:
     session.chdir("docs")
     if os.path.exists("_build"):
         shutil.rmtree("_build")
-    session.run("sphinx-apidoc", "--force", "-o", "api", "../src/bmi_simplecrop", "*tests")
+    session.run(
+        "sphinx-apidoc", "--force", "-o", "api", "../src/bmi_simplecrop", "*tests"
+    )
     session.run("sphinx-build", "-b", "html", "-W", ".", "_build/html")
 
 
@@ -113,4 +115,3 @@ def clean(session):
     for p in (ROOT / "docs" / "api").glob("*rst"):
         if p.name != "index.rst":
             p.unlink()
-

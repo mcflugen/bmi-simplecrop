@@ -1,0 +1,3 @@
+Set up continuous integraion using GitHub Actions that check for package lint
+and run the test suite.
+
