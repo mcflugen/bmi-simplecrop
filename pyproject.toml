@@ -27,7 +27,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Topic :: Software Development :: Code Generators",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.8"
 dependencies = [
   "bmipy",
   "dask",
