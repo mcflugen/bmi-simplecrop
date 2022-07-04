@@ -1,0 +1,4 @@
+Set up *bmi-simplecrop* with all of the ancillary files to make it a proper
+Python package (static project metadata, development files, documentation
+stubs, etc.).
+
