@@ -41,5 +41,5 @@ jobs:
       - name: Test package
         run: nox -s tests
 
-      - name: Test command line
-        run: nox -s cli
+      # - name: Test command line
+      #   run: nox -s cli
