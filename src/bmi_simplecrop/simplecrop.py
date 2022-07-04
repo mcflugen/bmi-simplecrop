@@ -20,8 +20,10 @@ class SimpleCropError(Exception):
 class SimpleCropNotFoundError(SimpleCropError):
     def __init__(self, msg):
         self._msg = msg
+
     def __str__(self):
         return self._msg
+
 
 PLANT_INPUT = {
     "n_leaves_max": 12.0,
@@ -153,7 +155,7 @@ class SimpleCrops:
         filepath = pathlib.Path(filepath)
         relative_to = filepath.parent.absolute()
 
-        with open(filepath, "r") as fp:
+        with open(filepath) as fp:
             filepaths = [
                 relative_to / pathlib.Path(line.strip())
                 for line in fp.readlines()
@@ -338,7 +340,9 @@ class SimpleCrop:
         )
 
     def load_soil(self):
-        return SimpleCrop.read_soil_output(pathlib.Path(self.run_dir) / "output" / "soil.out")
+        return SimpleCrop.read_soil_output(
+            pathlib.Path(self.run_dir) / "output" / "soil.out"
+        )
 
     def __repr__(self):
         return f"SimpleCrop({self.run_dir!r})"

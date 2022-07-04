@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from collections import namedtuple
 from typing import Tuple
 
@@ -12,8 +11,9 @@ from .simplecrop import SimpleCrop
 BmiVar = namedtuple(
     "BmiVar",
     ["units", "dtype", "size", "intent", "location", "grid"],
-    defaults=["none", None]
+    defaults=["none", None],
 )
+
 
 class BmiSimpleCrop(Bmi):
 
@@ -31,14 +31,24 @@ class BmiSimpleCrop(Bmi):
         "soil_evaporation": BmiVar(units="mm", dtype=float, size=1, intent="out"),
         "plant_transpiration": BmiVar(units="mm", dtype=float, size=1, intent="out"),
         "soil_water_content": BmiVar(units="mm", dtype=float, size=1, intent="out"),
-        "soil_water_content_concentration": BmiVar(units="mm", dtype=float, size=1, intent="out"),
+        "soil_water_content_concentration": BmiVar(
+            units="mm", dtype=float, size=1, intent="out"
+        ),
         "drought_stress": BmiVar(units="1", dtype=float, size=1, intent="out"),
         "excess_water_stress": BmiVar(units="1", dtype=float, size=1, intent="out"),
     }
 
     def __init__(self):
-        self._input_items = {name for name, var in self.exchange_item.items() if var.intent.startswith("in")}
-        self._output_items = {name for name, var in self.exchange_item.items() if var.intent.endswith("out")}
+        self._input_items = {
+            name
+            for name, var in self.exchange_item.items()
+            if var.intent.startswith("in")
+        }
+        self._output_items = {
+            name
+            for name, var in self.exchange_item.items()
+            if var.intent.endswith("out")
+        }
 
     def finalize(self) -> None:
         """Perform tear-down tasks for the model.
@@ -721,4 +731,3 @@ class BmiSimpleCrop(Bmi):
             A model time later than the current model time.
         """
         self._time = time
-

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from collections import namedtuple
 from typing import Tuple
 
@@ -12,28 +11,64 @@ from .simplecrop import SimpleCrops
 BmiVar = namedtuple(
     "BmiVar",
     ["units", "dtype", "size", "intent", "location", "grid"],
-    defaults=["none", None]
+    defaults=["none", None],
 )
+
 
 class BmiSimpleCrops(Bmi):
 
     name = "simplecrop"
     exchange_item = {
-        "solar_radiation": BmiVar(units="MJ / m2", dtype=float, size=365, intent="out", location="face", grid=0),
-        "temperature_max": BmiVar(units="degC", dtype=float, size=365, intent="out", location="face", grid=0),
-        "temperature_min": BmiVar(units="degC", dtype=float, size=365, intent="out", location="face", grid=0),
-        "rain": BmiVar(units="mm", dtype=float, size=365, intent="out", location="face", grid=0),
-        "irrigation": BmiVar(units="mm", dtype=float, size=365, intent="out", location="face", grid=0),
-        "runoff": BmiVar(units="mm", dtype=float, size=365, intent="out", location="face", grid=0),
-        "infiltration": BmiVar(units="mm", dtype=float, size=365, intent="out", location="face", grid=0),
-        "drain": BmiVar(units="mm", dtype=float, size=365, intent="out", location="face", grid=0),
-        "evapotranspiration": BmiVar(units="mm", dtype=float, size=365, intent="out", location="face", grid=0),
-        "soil_evaporation": BmiVar(units="mm", dtype=float, size=365, intent="out", location="face", grid=0),
-        "plant_transpiration": BmiVar(units="mm", dtype=float, size=365, intent="out", location="face", grid=0),
-        "soil_water_content": BmiVar(units="mm", dtype=float, size=365, intent="out", location="face", grid=0),
-        "soil_water_content_concentration": BmiVar(units="mm", dtype=float, size=365, intent="out", location="face", grid=0),
-        "drought_stress": BmiVar(units="1", dtype=float, size=365, intent="out", location="face", grid=0),
-        "excess_water_stress": BmiVar(units="1", dtype=float, size=365, intent="out", location="face", grid=0),
+        "solar_radiation": BmiVar(
+            units="MJ / m2",
+            dtype=float,
+            size=365,
+            intent="out",
+            location="face",
+            grid=0,
+        ),
+        "temperature_max": BmiVar(
+            units="degC", dtype=float, size=365, intent="out", location="face", grid=0
+        ),
+        "temperature_min": BmiVar(
+            units="degC", dtype=float, size=365, intent="out", location="face", grid=0
+        ),
+        "rain": BmiVar(
+            units="mm", dtype=float, size=365, intent="out", location="face", grid=0
+        ),
+        "irrigation": BmiVar(
+            units="mm", dtype=float, size=365, intent="out", location="face", grid=0
+        ),
+        "runoff": BmiVar(
+            units="mm", dtype=float, size=365, intent="out", location="face", grid=0
+        ),
+        "infiltration": BmiVar(
+            units="mm", dtype=float, size=365, intent="out", location="face", grid=0
+        ),
+        "drain": BmiVar(
+            units="mm", dtype=float, size=365, intent="out", location="face", grid=0
+        ),
+        "evapotranspiration": BmiVar(
+            units="mm", dtype=float, size=365, intent="out", location="face", grid=0
+        ),
+        "soil_evaporation": BmiVar(
+            units="mm", dtype=float, size=365, intent="out", location="face", grid=0
+        ),
+        "plant_transpiration": BmiVar(
+            units="mm", dtype=float, size=365, intent="out", location="face", grid=0
+        ),
+        "soil_water_content": BmiVar(
+            units="mm", dtype=float, size=365, intent="out", location="face", grid=0
+        ),
+        "soil_water_content_concentration": BmiVar(
+            units="mm", dtype=float, size=365, intent="out", location="face", grid=0
+        ),
+        "drought_stress": BmiVar(
+            units="1", dtype=float, size=365, intent="out", location="face", grid=0
+        ),
+        "excess_water_stress": BmiVar(
+            units="1", dtype=float, size=365, intent="out", location="face", grid=0
+        ),
     }
 
     grid = {
@@ -45,9 +80,18 @@ class BmiSimpleCrops(Bmi):
             "origin": None,
         }
     }
+
     def __init__(self):
-        self._input_items = {name for name, var in self.exchange_item.items() if var.intent.startswith("in")}
-        self._output_items = {name for name, var in self.exchange_item.items() if var.intent.endswith("out")}
+        self._input_items = {
+            name
+            for name, var in self.exchange_item.items()
+            if var.intent.startswith("in")
+        }
+        self._output_items = {
+            name
+            for name, var in self.exchange_item.items()
+            if var.intent.endswith("out")
+        }
 
     def finalize(self) -> None:
         """Perform tear-down tasks for the model.
@@ -561,7 +605,10 @@ class BmiSimpleCrops(Bmi):
         int
             Item size in bytes.
         """
-        return numpy.dtype(self.exchange_item[name].dtype).itemsize * self.exchange_item[name].size
+        return (
+            numpy.dtype(self.exchange_item[name].dtype).itemsize
+            * self.exchange_item[name].size
+        )
 
     def get_var_location(self, name: str) -> str:
         """Get the grid element type that the a given variable is defined on.
@@ -696,12 +743,20 @@ class BmiSimpleCrops(Bmi):
 
         df = self._simplecrop._output["soil"]
 
-        self._start_time = df.map_partitions(
-            lambda data: float(data["day_of_year"].iloc[0]), meta=(None, float)
-        ).compute().min()
-        self._end_time = df.map_partitions(
-            lambda data: float(data["day_of_year"].iloc[-1]), meta=(None, float)
-        ).compute().max()
+        self._start_time = (
+            df.map_partitions(
+                lambda data: float(data["day_of_year"].iloc[0]), meta=(None, float)
+            )
+            .compute()
+            .min()
+        )
+        self._end_time = (
+            df.map_partitions(
+                lambda data: float(data["day_of_year"].iloc[-1]), meta=(None, float)
+            )
+            .compute()
+            .max()
+        )
 
         # self._start_time = self._simplecrop._output["soil"]["day_of_year"].iloc[0]
         # self._end_time = self._simplecrop._output["soil"]["day_of_year"].iloc[-1]
@@ -765,4 +820,3 @@ class BmiSimpleCrops(Bmi):
             A model time later than the current model time.
         """
         self._time = time
-
