@@ -109,7 +109,7 @@ line-length = 88
 
 [tool.towncrier]
 directory = "news"
-package = "bmi-simplecrop"
+package = "bmi_simplecrop"
 filename = "CHANGES.rst"
 single_file = true
 underlines = "-`^"
